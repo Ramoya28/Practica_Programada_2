@@ -4,6 +4,8 @@ public class Practica_Programada_2 {
 
     public static void main(String[] args) {
         
+        
+        
     }
     
 }
