@@ -1,5 +1,7 @@
 package practica_programada_2;
 
+import javax.swing.JOptionPane;
+
 public class ListaC {
 
     private NodoC cabeza, ultimo;
@@ -85,10 +87,80 @@ public class ListaC {
         }
     }
 
+    public Evaluacion busquedaId(int n) {
+        if (this.esVacia()) {
+            return null;
+        }
+
+        NodoC aux = cabeza;
+        do {
+            if (aux.getDato().getNumCarnet() == n) {
+                return aux.getDato();
+            }
+            aux = aux.getSig();
+        } while (aux != cabeza);
+
+        return null;
+    }
+
+    public Evaluacion busquedaNombre(String nombre) {
+        if (this.esVacia()) {
+            return null;
+        }
+
+        NodoC aux = cabeza;
+        do {
+            if (aux.getDato().getNombre().equals(nombre)) {
+                return aux.getDato();
+            }
+            aux = aux.getSig();
+        } while (aux != cabeza);
+
+        return null;
+    }
+
+    public void estadisticas() {
+        if (this.esVacia()) {
+            JOptionPane.showMessageDialog(null, "La lista está vacía.");
+            return;
+        }
+
+        int totalEvaluaciones = 0;
+        int totalAprobados = 0;
+        int totalReprobados = 0;
+        int sumaNotasAprobados = 0;
+        int sumaTotalNotas = 0;
+
+        NodoC aux = cabeza;
+        do {
+            int nota = aux.getDato().getNota();
+            sumaTotalNotas += nota;
+            totalEvaluaciones++;
+
+            if (nota >= 70) {
+                totalAprobados++;
+                sumaNotasAprobados += nota;
+            } else {
+                totalReprobados++;
+            }
+
+            aux = aux.getSig();
+        } while (aux != cabeza);
+
+        int promedioAprobados = sumaNotasAprobados / totalAprobados;
+        int promedioGeneral = sumaTotalNotas / totalEvaluaciones;
+
+        JOptionPane.showMessageDialog(null, "***** Estadisticas *****\n"
+                + "Total de aprobados: " + totalAprobados + "\n"
+                + "Total de reprobados: " + totalReprobados + "\n"
+                + "Promedio de notas de aprobados: " + promedioAprobados + "\n"
+                + "Promedio general de notas: " + promedioGeneral);
+    }
+
     @Override
     public String toString() {
         String r = "Lista Doble Enlazada Circular\n";
-        if (!this.esVacia()) {
+        if (this.esVacia()) {
             r += "Vacia";
         } else {
             NodoC aux = cabeza;
