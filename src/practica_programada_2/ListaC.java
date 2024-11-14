@@ -11,13 +11,13 @@ public class ListaC {
             return false;
         }
     }
-    
+
     public void inserta(Evaluacion e) {
         NodoC nuevo = new NodoC(e);
         if (this.esVacia()) {
             cabeza = nuevo;
             //circular
-            ultimo=nuevo;
+            ultimo = nuevo;
             ultimo.setSig(cabeza);
             //doble
             cabeza.setAnt(ultimo);
@@ -29,17 +29,17 @@ public class ListaC {
             ultimo.setSig(cabeza);
             //doble
             cabeza.setAnt(ultimo);
-        } else if (nuevo.getDato().getNumCarnet()>=ultimo.getDato().getNumCarnet()) {
+        } else if (nuevo.getDato().getNumCarnet() >= ultimo.getDato().getNumCarnet()) {
             ultimo.setSig(nuevo);
             nuevo.setAnt(ultimo);//doble
-            ultimo=nuevo;
+            ultimo = nuevo;
             ultimo.setSig(cabeza);
             //doble
             cabeza.setAnt(ultimo);
         } else {
             NodoC aux = cabeza;
             while (aux.getSig() != ultimo
-&& aux.getSig().getDato().getNumCarnet() < nuevo.getDato().getNumCarnet()) {
+                    && aux.getSig().getDato().getNumCarnet() < nuevo.getDato().getNumCarnet()) {
                 aux = aux.getSig();
             }
             //insertar al final o en medio
@@ -50,7 +50,7 @@ public class ListaC {
             nuevo.getSig().setAnt(nuevo);
         }
     }
-    
+
     public int eliminar(int n) {
         if (this.esVacia()) {
             return -1;//pila vacia
@@ -65,7 +65,7 @@ public class ListaC {
                 }
                 return 1;//logre eliminar
             } else if (ultimo.getDato().getNumCarnet() == n) {
-                ultimo=ultimo.getAnt();
+                ultimo = ultimo.getAnt();
                 ultimo.setSig(cabeza);
                 cabeza.setAnt(ultimo);
                 return 1;//logre eliminar
@@ -83,6 +83,22 @@ public class ListaC {
             }
             return -2;//elemento no encontrado
         }
+    }
+
+    @Override
+    public String toString() {
+        String r = "Lista Doble Enlazada Circular\n";
+        if (!this.esVacia()) {
+            r += "Vacia";
+        } else {
+            NodoC aux = cabeza;
+            do {
+                r += aux + "\n";
+                aux = aux.getSig();
+            } while (aux != cabeza);
+
+        }
+        return r;
     }
 
 }
