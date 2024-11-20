@@ -157,6 +157,62 @@ public class ListaC {
                 + "Promedio general de notas: " + promedioGeneral);
     }
 
+    public Evaluacion extrae(int numCarnet) {
+        if (this.esVacia()) {
+            return null;
+        }
+        if (cabeza.getDato().getNumCarnet() == numCarnet) {
+            Evaluacion extraida = cabeza.getDato();
+            eliminar(numCarnet);
+            return extraida;
+        } else if (ultimo.getDato().getNumCarnet() == numCarnet) {
+            Evaluacion extraida = ultimo.getDato();
+            eliminar(numCarnet);
+            return extraida;
+        } else {
+            NodoC aux = cabeza;
+            while (aux.getSig() != cabeza) {
+                if (aux.getSig().getDato().getNumCarnet() == numCarnet) {
+                    Evaluacion extraida = aux.getSig().getDato();
+                    eliminar(numCarnet);
+                    return extraida;
+                }
+                aux = aux.getSig();
+            }
+        }
+        return null;
+    }
+
+    public Evaluacion notaMayor() {
+        if (this.esVacia()) {
+            return null;
+        }
+        NodoC aux = cabeza;
+        Evaluacion mayor = cabeza.getDato();
+        do {
+            if (aux.getDato().getNota() > mayor.getNota()) {
+                mayor = aux.getDato();
+            }
+            aux = aux.getSig();
+        } while (aux != cabeza);
+        return mayor;
+    }
+
+    public Evaluacion notaMenor() {
+        if (this.esVacia()) {
+            return null;
+        }
+        NodoC aux = cabeza;
+        Evaluacion menor = cabeza.getDato();
+        do {
+            if (aux.getDato().getNota() < menor.getNota()) {
+                menor = aux.getDato();
+            }
+            aux = aux.getSig();
+        } while (aux != cabeza);
+        return menor;
+    }
+
     @Override
     public String toString() {
         String r = "Lista Doble Enlazada Circular\n";
